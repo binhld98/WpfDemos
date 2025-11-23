@@ -8,4 +8,18 @@
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Remove="Assets\file.svg" />
+    <None Remove="Assets\folder.svg" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="SharpVectors" Version="1.8.5" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Assets\file.svg" />
+    <Resource Include="Assets\folder.svg" />
+  </ItemGroup>
+
 </Project>

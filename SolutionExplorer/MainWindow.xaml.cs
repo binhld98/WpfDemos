@@ -19,6 +19,8 @@ namespace SolutionExplorer
         public MainWindow()
         {
             InitializeComponent();
+
+            SolutionExplorer_ContentControl.Content = new UserControls.SolutionExplorer();
         }
     }
 }

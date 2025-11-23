@@ -84,8 +84,21 @@
                                                       Visibility="{Binding IsFolder, Converter={StaticResource TrueFalseToVisibleHiddenConverter}}"/>
                                         <svgc:SvgViewbox Width="12" Height="12" Source="{Binding Icon}"/>
                                     </WrapPanel>
-                                    <TextBlock Text="{Binding Name}"/>
+                                    <TextBlock x:Name="CaptionViewMode"
+                                               Text="{Binding Name, UpdateSourceTrigger=Explicit}"
+                                               Visibility="{Binding IsEditting, Converter={StaticResource InverseTrueFalseToVisibleCollapsedConverter}}"/>
+                                    <TextBox x:Name="CaptionEditMode"
+                                             Text="{Binding Name, UpdateSourceTrigger=Explicit}"
+                                             Visibility="{Binding IsEditting, Converter={StaticResource TrueFalseToVisibleCollapsedConverter}}"
+                                             IsVisibleChanged="CaptionEditMode_IsVisibleChanged"
+                                             KeyDown="CaptionEditMode_KeyDown"
+                                             LostKeyboardFocus="CaptionEditMode_LostKeyboardFocus"/>
                                 </WrapPanel>
+                                <Border.ContextMenu>
+                                    <ContextMenu>
+                                        <MenuItem x:Name="RenameMenuItem" Header="Rename" Click="RenameMenuItem_Click"/>
+                                    </ContextMenu>
+                                </Border.ContextMenu>
                             </Border>
                             <ItemsPresenter x:Name="ItemsHost" Visibility="Collapsed"/>
                             <VisualStateManager.VisualStateGroups>

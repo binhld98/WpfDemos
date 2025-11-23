@@ -1,11 +1,12 @@
 ﻿<Application x:Class="SolutionExplorer.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:SolutionExplorer"
              xmlns:converters="clr-namespace:SolutionExplorer.Converters"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
         <converters:BooleanToVisibilityConverter x:Key="TrueFalseToVisibleHiddenConverter" True="Visible" False="Hidden"/>
         <converters:BooleanToVisibilityConverter x:Key="InverseTrueFalseToVisibleHiddenConverter" True="Hidden" False="Visible"/>
+        <converters:BooleanToVisibilityConverter x:Key="TrueFalseToVisibleCollapsedConverter" True="Visible" False="Collapsed"/>
+        <converters:BooleanToVisibilityConverter x:Key="InverseTrueFalseToVisibleCollapsedConverter" True="Collapsed" False="Visible"/>
     </Application.Resources>
 </Application>

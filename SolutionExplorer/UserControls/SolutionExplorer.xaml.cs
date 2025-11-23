@@ -1,17 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace SolutionExplorer.UserControls
 {
@@ -77,7 +66,63 @@ namespace SolutionExplorer.UserControls
 
         private void HeaderedItem_ContextMenuOpening(object sender, ContextMenuEventArgs e)
         {
+            if (sender is not Border border)
+                return;
 
+            if (border.DataContext is not DomainModels.SolutionExplorerItem item)
+                return;
+
+            item.IsSelected = true;
+        }
+
+        private void RenameMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            if (sender is not MenuItem menuItem || menuItem.DataContext is not DomainModels.SolutionExplorerItem item)
+                return;
+
+            item.IsEditting = true;
+        }
+
+        private void CaptionEditMode_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (sender is not TextBox textBox || textBox.DataContext is not DomainModels.SolutionExplorerItem item)
+                return;
+
+            switch (e.Key)
+            {
+                case Key.Enter:
+                    textBox.GetBindingExpression(TextBox.TextProperty)?.UpdateSource();
+                    item.IsEditting = false;
+                    break;
+
+                case Key.Escape:
+                    textBox.GetBindingExpression(TextBox.TextProperty)?.UpdateTarget();
+                    item.IsEditting = false;
+                    break;
+            }
+        }
+
+        private void CaptionEditMode_LostKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
+        {
+            if (sender is not TextBox textBox || textBox.DataContext is not DomainModels.SolutionExplorerItem item)
+                return;
+
+            item.IsEditting = false;
+        }
+
+        private void CaptionEditMode_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            if (sender is not TextBox textBox || textBox.DataContext is not DomainModels.SolutionExplorerItem item)
+                return;
+
+            if (item.IsEditting)
+            {
+                Dispatcher.BeginInvoke(new Action(() =>
+                {
+                    textBox.Focus();
+                    textBox.SelectAll();
+                }));
+            }
         }
     }
 }
